@@ -10,7 +10,7 @@ import axios from "axios";
 import OrderList from "./components/OrderList/OrderList";
 import {host} from "./services/GoodService";
 
-const goodsList = await axios.get(host + `/api/good/all`)
+const goodsList = await axios.get(host + `/good/all`)
 const ordersList = await axios.get(host + "/order/all");
 
  function App() {

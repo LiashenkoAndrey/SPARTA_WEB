@@ -1,11 +1,9 @@
 import axios from "axios";
 
 // export const host = "http://localhost:8080/api"
-export const host = "https://514d-185-244-159-203.ngrok-free.app/api"
+export const host = "http://192.168.220.245:8080/api"
 const PAGE_SIZE = 10;
-export async function getGoodsPage() {
-    return await axios.get(`http://localhost:8080/api/good/all`)
-}
+
 
 export function isOrdered(id, orders) {
     for (let i = 0; i < orders.length; i++) {
