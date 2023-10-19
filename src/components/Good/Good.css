@@ -1,0 +1,59 @@
+
+.Good {
+    position: relative;
+    padding: 5px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.goodsAmount {
+    background-color: #2AABEE;
+    position: absolute;
+    top: 0;
+    color: black;
+    right: 0;
+    border-radius: 30px;
+    height: 30px;
+    width: 30px;
+    display: flex;
+    justify-content: center!important;
+    align-items: center!important;
+}
+
+.Good img {
+    width: 100%;
+    height: auto;
+}
+
+.goodBtn {
+    margin-top: 5px;
+}
+
+.addGoodBtn {
+    background-color: black;
+    margin-top: 5px;
+}
+
+.addGoodBtn:hover {
+    background-color: #107c00;
+}
+
+
+.removeGoodBtn:hover {
+    background-color: #540303;
+}
+
+.goodName {
+}
+
+.goodButtonsWrapper img {
+    width: 40px;
+    margin-top: 5px;
+}
+
+.Button {
+    margin-top: 10px;
+}
+
+

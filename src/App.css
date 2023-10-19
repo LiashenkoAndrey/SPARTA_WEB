@@ -1,8 +1,20 @@
 
+@import url('https://fonts.googleapis.com/css2?family=Young+Serif&display=swap');
+
+
 * {
   padding: 0;
   margin: 0;
   box-sizing: border-box;
+}
+
+#root {
+  height: 100%;
+}
+
+html, body {
+  font-family: 'Young Serif', serif;
+  height: 100vw;
 }
 
 body {

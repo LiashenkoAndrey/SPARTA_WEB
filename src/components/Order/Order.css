@@ -1,0 +1,32 @@
+
+.order {
+    background-color: var(--tg-theme-secondary-bg-color);
+}
+
+
+.goodWithAmount {
+    margin-bottom: 5px;
+    padding: 5px;
+    border: #1e141442 solid 1px;
+    display: flex;
+    justify-content: space-between;
+}
+
+.goodWithAmount div {
+    display: flex;
+    gap: 15px;
+}
+
+.goodWithAmount div:nth-of-type(2) {
+    display: flex;
+    flex-direction: column;
+}
+
+.goodWithAmount span {
+    align-self: flex-start;
+}
+
+.goodWithAmount div img {
+    width: 80px;
+
+}

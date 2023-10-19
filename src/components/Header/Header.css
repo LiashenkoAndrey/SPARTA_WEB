@@ -1,0 +1,17 @@
+
+.Header {
+    background: -webkit-linear-gradient(39deg, hsla(189, 100%, 50%, 1) 0%, hsla(248, 16%, 61%, 1) 100%);
+    padding: 5px;
+    gap: 20px;
+    display: flex;
+    justify-content: space-between;
+}
+
+.logoWrapper {
+    gap: 20px;
+    display: flex;
+}
+
+.Header h1 {
+    color: white;
+}

@@ -1,0 +1,6 @@
+
+
+.clientInfo {
+    display: flex;
+    flex-direction: column;
+}
