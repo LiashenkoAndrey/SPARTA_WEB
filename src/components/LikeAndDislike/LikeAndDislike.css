@@ -1,0 +1,50 @@
+
+
+.likeOrDislikeAmount {
+    color: white;
+    width: 25px;
+    height: 25px;
+    padding: 14px;
+    position: absolute;
+    right: 0;
+    bottom: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 20px;
+}
+
+
+
+.like {
+    background-color: #007c08d4;
+    right: -14px;
+    bottom: -4px;
+}
+
+.dislike {
+    background-color: rgba(10, 0, 124, 0.6);
+    right: -13px;
+    bottom: -4px;
+}
+
+.likeWrapper:active {
+    background-color: rgba(22, 178, 0, 0.48);
+}
+
+.disLikeWrapper:active {
+    padding: 5px;
+    border-radius: 10px;
+    background-color: rgba(173, 0, 39, 0.47);
+}
+
+.markBtnWrapper {
+    padding: 5px;
+    border-radius: 10px;
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 50px;
+    height: 50px;
+}

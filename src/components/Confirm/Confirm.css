@@ -35,8 +35,8 @@ textarea {
 }
 
 .input {
+    margin-top: 2px;
     font-family: 'serif';
-
     background-color: var(--tg-theme-secondary-bg-color);
     border: none;
     width: 100%;
@@ -44,6 +44,23 @@ textarea {
     font-size: 18px;
     color: var(--tg-theme-text-color);
 }
+
+.deliverySelect {
+    margin-top: 2px;
+    background-color: var(--tg-theme-secondary-bg-color);
+    font-size: 14px;
+    color: var(--tg-theme-text-color);
+    padding: 8px 10px;
+}
+
+.userInputWrapper {
+    margin: 20px;
+}
+
+.userInputWrapper div {
+    margin-top: 20px;
+}
+
 
 
 .orderHeader {
@@ -86,6 +103,8 @@ textarea {
     display: flex;
 }
 
-.titleWrapper p {
-
+.totalPrice {
+    padding: 5px;
+    text-align: end;
 }
+

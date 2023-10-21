@@ -14,6 +14,7 @@ const Header = () => {
                 <img src={logo} width={120} alt=""/>
             </div>
             <a href="/orders">orders</a>
+            <a href="/newGood">new good</a>
             <img src={close} style={{width: 50, padding: 13}} onClick={onClose} alt=""/>
         </div>
     );

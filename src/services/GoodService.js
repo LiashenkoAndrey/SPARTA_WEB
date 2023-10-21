@@ -1,7 +1,7 @@
 import axios from "axios";
 
-// export const host = "http://localhost:8080/api"
-export const host = "http://192.168.220.245:8080/api"
+export const host = "http://localhost:8080/api"
+// export const host = "http://192.168.220.245:8080/api"
 const PAGE_SIZE = 10;
 
 
@@ -14,7 +14,7 @@ export function isOrdered(id, orders) {
 
 export function getTotalPrice(orders) {
     return orders.reduce((acc, elem) => {
-        return acc += elem.amount;
+        return acc += (elem.good.price * elem.amount);
     }, 0)
 }
 
@@ -24,4 +24,12 @@ export async function saveOrder(order) {
 
 export async function getAllOrders() {
     return (await axios.get(host + "/order/all"));
+}
+
+export async function markGood(clientId, goodId, mark) {
+    const params = new URLSearchParams();
+    params.append('clientId', clientId);
+    params.append('goodId', goodId);
+    params.append('mark', mark);
+    await axios.post(host + "/good/mark", params)
 }

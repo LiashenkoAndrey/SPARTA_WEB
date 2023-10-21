@@ -1,10 +1,11 @@
 import React from 'react';
-import Client from "../Client/Client";
 import './Order.css'
+import {Descriptions} from "antd";
+import {getTotalPrice} from "../../services/GoodService";
 
-const Order = ({client, goodsWithAmount, message}) => {
+const Order = ({client, goodsWithAmount, message, methodOfDelivery, createdOn}) => {
     console.log(client)
-    console.log(goodsWithAmount)
+
     return (
         <div className={"order"}>
             {goodsWithAmount.map(goodWithAmount => (
@@ -15,26 +16,26 @@ const Order = ({client, goodsWithAmount, message}) => {
                     </div>
                     <div>
                         <span>{goodWithAmount.amount} од.</span>
-                        <span>Ціна: 200 грн.</span>
+                        <span>Ціна: {goodWithAmount.good.price} грн.</span>
                     </div>
+                    <hr/>
                 </div>
             ))}
 
-            <div>
-                <Client client={client} />
+            <Descriptions title="Деталі запису">
+                <Descriptions.Item label="Ім'я">{client.name}</Descriptions.Item>
+                <Descriptions.Item label="Телефон">{client.phoneNumber}</Descriptions.Item>
+                <Descriptions.Item label="Метод доставки">{methodOfDelivery}</Descriptions.Item>
+                <Descriptions.Item label="Загальна сума">{getTotalPrice(goodsWithAmount)}</Descriptions.Item>
+
                 {message
-                    ?
-                    <div>
-                        <h4>Коментар:</h4>
-                        <p>{message}</p>
-                    </div>
-                    :
+                ?
+                    <Descriptions.Item label="Коментар">{message}</Descriptions.Item>
+
+                :
                     <div></div>
                 }
-            </div>
-            <div>
-                <h4 style={{textAlign:"end"}}>Загальна сума: 2300 грн.</h4>
-            </div>
+            </Descriptions>
         </div>
     );
 };

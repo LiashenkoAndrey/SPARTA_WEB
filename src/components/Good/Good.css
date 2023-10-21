@@ -21,6 +21,8 @@
     align-items: center!important;
 }
 
+
+
 .Good img {
     width: 100%;
     height: auto;
@@ -45,6 +47,8 @@
 }
 
 .goodName {
+    display: flex;
+    flex-direction: column;
 }
 
 .goodButtonsWrapper img {
@@ -57,3 +61,17 @@
 }
 
 
+.likes {
+    gap: 20px;
+    margin: 40px 20px 10px 20px;
+    display: flex;
+}
+
+.likes span svg {
+    width: 40px;
+    height: 40px;
+}
+
+.modalImage {
+    width: 100%;
+}

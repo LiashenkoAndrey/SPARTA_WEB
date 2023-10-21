@@ -1,8 +1,34 @@
 
 
-.ordersList {
-    padding: 8px 5px;
-    display: flex;
-    flex-direction: column;
-    row-gap: 23px;
+
+.ordersListWrapper {
+    margin-top: 20px;
+}
+
+.custom_panel {
+    :global(.ant-collapse-content-box) {
+        padding: 0 !important;
+    }
+}
+
+.ant-collapse-header-text {
+    color: var(--tg-theme-text-color);
+}
+
+.ant-collapse-arrow svg {
+    fill: var(--tg-theme-text-color);
+}
+
+.ant-collapse-content-box {
+    background-color: var(--tg-theme-bg-color) !important;
+    padding: 0!important;
+}
+
+.ant-descriptions-item-label, .ant-descriptions-item-content, .ant-descriptions-title {
+    color: var(--tg-theme-text-color) !important;
+}
+
+.ant-collapse-item, .ant-collapse, .ant-collapse-content {
+    /*border-width: 2px!important;*/
+    border-color: var(--tg-theme-secondary-bg-color) !important;
 }

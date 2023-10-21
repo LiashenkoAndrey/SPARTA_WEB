@@ -6,27 +6,36 @@ import {getTotalPrice, saveOrder} from "../../services/GoodService";
 import {useTelegram} from "../../hooks/useTelegram";
 import {Order} from '../../domain/Order';
 import {Client} from '../../domain/Client';
+import {TelegramContext} from "../../context2";
 
 
 const Confirm = () => {
 
     const {orderedGoods, setOrderedGoods} = useContext(OrderContext)
+    const {client, setClient} = useContext(TelegramContext);
     const {mainBtn, tg} = useTelegram();
     const [phoneNumber, setPhoneNumber] = useState('')
     const [clientName, setClientName] = useState('')
+    const [methodOfDelivery, setMethodOfDelivery] = useState('Самовивіз')
     const [message, setMessage] = useState('')
+    const [addressInputDisplay, setAddressInputDisplay] = useState('none')
+    const [addressInput, setAddressInput] = useState('')
 
     const sendData = useCallback(() => {
-
         const order = new Order(
-            new Client(tg.initDataUnsafe.user.id, clientName, phoneNumber),
+            new Client(tg.initDataUnsafe.user.id, client.chatId, clientName, phoneNumber),
             orderedGoods,
-            message
+            message,
+            methodOfDelivery
         )
 
+        if (!client.chatId) {
+            throw new Error("chat id is: " + client.chatId)
+        }
+
         saveOrder(order);
-        // tg.close();
-    },[message])
+        tg.close();
+    },[chatId, clientName, phoneNumber, orderedGoods, message, methodOfDelivery])
 
     useEffect(() => {
         tg.onEvent("mainButtonClicked", sendData)
@@ -42,15 +51,19 @@ const Confirm = () => {
     }, []);
 
     useEffect(() => {
-        if (!phoneNumber || !clientName) {
+        if (!phoneNumber || !clientName || (addressInputDisplay === 'block' && !addressInput)) {
             mainBtn.hide();
         } else {
             mainBtn.show();
         }
-    }, [phoneNumber, clientName]);
+    }, [phoneNumber, clientName, addressInputDisplay, addressInput]);
 
     const onChangePhoneNumber = (e) => {
         setPhoneNumber(e.target.value)
+    }
+
+    const onChangeAddressInput = (e) => {
+        setAddressInput(e.target.value)
     }
 
     const onChangeMessage = (e) => {
@@ -59,6 +72,16 @@ const Confirm = () => {
 
     const onChangeClientName = (e) => {
         setClientName(e.target.value)
+    }
+
+    const onChangeDeliveryMethod = (e) => {
+        setMethodOfDelivery(e.target.value)
+        if (e.target.value === "Кур'єр") {
+            setAddressInputDisplay('block')
+        } else {
+            setAddressInputDisplay('none')
+        }
+        encodeURIComponent()
     }
 
 
@@ -75,6 +98,7 @@ const Confirm = () => {
                     <div className={"orderedItem"}>
                         <div className={"titleWrapper"} >
                             <img style={{height: 80}} src={item.good.image_url} alt=""/>
+                            <h4>{item.good.name}</h4>
                             <p>
                                 <span style={{color: '#ecbd03'}}>
                                     <span style={{textTransform: "uppercase", fontSize: 23}}>{item.amount}</span>
@@ -83,14 +107,15 @@ const Confirm = () => {
                             </p>
                         </div>
                         <div>
-                            {item.amount + " грн"}
+                            {item.good.price + " грн"}
                         </div>
                     </div>
                 ))}
+                <h4 className={"totalPrice"}>Загальна сума: {getTotalPrice(orderedGoods)}</h4>
             </div>
 
-            <div style={{margin: 20}}>
-                <div style={{paddingTop: 20}}>
+            <div className={"userInputWrapper"}>
+                <div>
                     <label htmlFor="phoneNumber">
                         <span className={"requiredLabel"}>Ваш номер телефону</span>
                     </label>
@@ -104,7 +129,7 @@ const Confirm = () => {
                     />
                 </div>
 
-                <div style={{paddingTop: 20}}>
+                <div>
                     <label htmlFor="clientName">
                         <span className={"requiredLabel"} >Ім'я</span>
                     </label>
@@ -116,6 +141,25 @@ const Confirm = () => {
                         className={"input"}
                         maxLength={50}
                     />
+                </div>
+                
+                <div>
+                    <label htmlFor="deliverySelect">Метод доставки</label>
+                    <select id={"deliverySelect"} className={"deliverySelect"} onChange={onChangeDeliveryMethod}>
+                        <option value="Самовивіз">Самовивіз</option>
+                        <option value="Кур'єр">Доставка кур'єром (безкоштовно)</option>
+                    </select>
+
+                    <div style={{display: addressInputDisplay}}>
+                        <label htmlFor="addressInput">Адреса</label>
+                        <input
+                            id={"addressInput"}
+                            type="text"
+                            className={"input"}
+                            onChange={onChangeAddressInput}
+                            max={255}
+                        />
+                    </div>
                 </div>
             </div>
 
