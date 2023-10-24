@@ -1,6 +1,6 @@
 import axios from "axios";
 
-export const host = "https://4e3d-51-20-63-133.ngrok-free.app:8080/api"
+export const host = "https://4e3d-51-20-63-133.ngrok-free.app/api"
 // export const host = "http://192.168.220.245:8080/api"
 const PAGE_SIZE = 10;
 

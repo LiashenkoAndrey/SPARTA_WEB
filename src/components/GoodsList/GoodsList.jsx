@@ -147,6 +147,7 @@ const GoodsList = () => {
         checkMainButton()
     }
 
+    console.log(goods)
 
     return (
         <div className={"GoodsListWrapper"}>
