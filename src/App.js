@@ -20,7 +20,7 @@ let existingClient
 
 if (telegramId) {
     try {
-        existingClient = (await axios.get("http://localhost:8080/api/client?telegramId=" + telegramId)).data
+        existingClient = (await axios.get(host + "/client?telegramId=" + telegramId)).data
     } catch (e) {
         existingClient = null
     }

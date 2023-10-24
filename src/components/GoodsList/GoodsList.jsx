@@ -16,7 +16,7 @@ import {DislikeOutlined, LikeOutlined} from "@ant-design/icons";
 async function getGoodsMarks(clientId) {
     try {
         if (clientId) {
-            const response = await axios.get("http://localhost:8080/api/good/getMarks?clientId=" + clientId);
+            const response = await axios.get(host + "/good/getMarks?clientId=" + clientId);
             return response.data;
         }
         return [];
