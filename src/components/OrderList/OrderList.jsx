@@ -1,12 +1,16 @@
-import React from 'react';
+import React, {useState} from 'react';
 import Order from "../Order/Order";
 import './OrderList.css'
 import {Collapse} from "antd";
+import axios from "axios";
+import {host} from "../../services/GoodService";
 
 const { Panel } = Collapse;
 
+const ordersList = await axios.get(host + "/order/all");
+const OrderList = () => {
 
-const OrderList = ({orders}) => {
+    const [orders, setOrders] = useState(ordersList.data);
 
     function toPrettyDate(date) {
         let month = date.getMonth();

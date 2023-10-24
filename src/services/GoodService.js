@@ -33,3 +33,10 @@ export async function markGood(clientId, goodId, mark) {
     params.append('mark', mark);
     await axios.post(host + "/good/mark", params)
 }
+
+export function isMarked(goodsMarks, goodId, mark) {
+    let goodMark = goodsMarks.find((goodMark) => {
+        return goodMark.goodId == goodId && goodMark.mark == mark
+    });
+    return goodMark != null;
+}

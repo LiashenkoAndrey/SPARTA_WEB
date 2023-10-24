@@ -2,18 +2,35 @@ import React, {useContext, useEffect, useState} from 'react';
 import Good from "../Good/Good";
 import './GoodsList.css'
 import {useTelegram} from "../../hooks/useTelegram";
-import {getTotalPrice, host, isOrdered, markGood} from "../../services/GoodService";
+import {getTotalPrice, host, isMarked, isOrdered, markGood} from "../../services/GoodService";
 import {OrderContext} from "../../context";
 import {Link, useNavigate} from "react-router-dom";
 import {Modal} from "antd";
 import Dislike from "../LikeAndDislike/Dislike";
 import Like from "../LikeAndDislike/Like";
 import axios from "axios";
-import {HeartTwoTone} from "@ant-design/icons";
 import {TelegramContext} from "../../context2";
+import {DislikeOutlined, LikeOutlined} from "@ant-design/icons";
 
 
-const GoodsList = ({goods}) => {
+async function getGoodsMarks(clientId) {
+    try {
+        if (clientId) {
+            const response = await axios.get("http://localhost:8080/api/good/getMarks?clientId=" + clientId);
+            return response.data;
+        }
+        return [];
+    } catch (e) {
+        console.log(e)
+    }
+}
+
+
+
+const goodsList = await axios.get(host + `/good/all`)
+
+const GoodsList = () => {
+
     const {client, setClient} = useContext(TelegramContext);
     const navigate = useNavigate();
     const {orderedGoods, setOrderedGoods} = useContext(OrderContext)
@@ -22,6 +39,20 @@ const GoodsList = ({goods}) => {
     const [good, setGood] = useState('')
     const [likes, setLikes] = useState(-1);
     const [dislikes, setDislikes] = useState(-1);
+    const [goodsMarks, setGoodsMarks] = useState([])
+
+
+    const [goods, setGoods] = useState(goodsList.data)
+
+    useEffect(() => {
+        fetchGoodsMarks()
+    }, []);
+
+    async function fetchGoodsMarks() {
+        const response = await getGoodsMarks(33)
+        console.log(response)
+        setGoodsMarks(response)
+    }
 
     const showModal = (selectedGood) => {
         setGood(selectedGood)
@@ -32,16 +63,12 @@ const GoodsList = ({goods}) => {
         mainBtn.hide()
     };
 
-
-
     function checkMainButton() {
         if (orderedGoods.length > 0) {
             if (orderedGoods[0] !== undefined) {
                 enableConfirmButton()
 
             } else {
-                console.log(orderedGoods[0])
-                console.log(orderedGoods[0] === undefined)
                 if (orderedGoods[0] === undefined) {
                     mainBtn.hide()
                 }
@@ -60,7 +87,6 @@ const GoodsList = ({goods}) => {
             let elemId = orderedGoods.indexOf(foundGood);
             orderedGoods[elemId].amount = orderedGood.amount +1;
             setOrderedGoods([...orderedGoods])
-            console.log("ordered good: " + good)
         }
 
         checkMainButton()
@@ -81,18 +107,20 @@ const GoodsList = ({goods}) => {
 
     const onLike = () => {
         let newLikes = good.likes + 1;
+        console.log(client)
         good.likes = newLikes
         setGood(good)
         setLikes(newLikes)
-        markGood(client.id, good.id, true)
+        markGood(client.client.id, good.id, true)
     }
 
     const onDislike = () => {
         let newDislikes = good.dislikes + 1;
         good.dislikes = newDislikes
+        console.log(client)
         setGood(good)
         setDislikes(newDislikes)
-        markGood(34, 1, false)
+        markGood(client.client.id, good.id, false)
     }
 
     function enableConfirmButton() {
@@ -123,9 +151,6 @@ const GoodsList = ({goods}) => {
     return (
         <div className={"GoodsListWrapper"}>
             <Link to={"/confirm"}>Confirm</Link>
-            {client.id}
-            {client.toString()}
-            {client.chatId}
             <div className={"GoodsList"}>
                 {goods.map(item => (
                     <Good
@@ -151,8 +176,36 @@ const GoodsList = ({goods}) => {
                 <img className={"modalImage"} src={good.image_url} alt="Фото товару"/>
 
                 <div className={"likes"}>
-                    <Dislike onDislike={onDislike} dislikes={dislikes}/>
-                    <Like onLike={onLike} likes={likes}/>
+
+                    {isMarked(goodsMarks, good.id, false)
+                        ?
+                        <div className={"markBtnWrapper markedDislikeWrapper"}>
+                            <DislikeOutlined />
+                            <span className={"likeOrDislikeAmount dislike"}>{dislikes}</span>
+                        </div>
+                        :
+                        <Dislike
+                            good={good}
+                            onDislike={onDislike}
+                            dislikes={dislikes}
+                            isClientRegistered={client.isRegistered}
+                        />
+                    }
+
+                    {isMarked(goodsMarks, good.id, true)
+                        ?
+                        <div className={"markBtnWrapper markedLikeWrapper"}>
+                            <LikeOutlined />
+                            <span className={"likeOrDislikeAmount like"}>{likes}</span>
+                        </div>
+                        :
+                        <Like
+                            good={good}
+                            onLike={onLike}
+                            likes={likes}
+                            isClientRegistered={client.isRegistered}
+                        />
+                    }
                 </div>
             </Modal>
         </div>

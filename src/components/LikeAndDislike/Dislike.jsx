@@ -1,23 +1,49 @@
-import React from 'react';
+import React, {useState} from 'react';
 import {DislikeOutlined} from "@ant-design/icons";
 import './LikeAndDislike.css'
 import {Tooltip} from "antd";
 
-const Dislike = ({dislikes, onDislike}) => {
+
+const Dislike = ({dislikes, onDislike, isClientRegistered, good}) => {
+
+
+    const onDislikeEvent = (e) => {
+        if (good.isClicked === undefined) {
+            onDislike()
+            good.isClicked=true;
+        }
+    }
+
     return (
-        <div onClick={onDislike} className={"markBtnWrapper disLikeWrapper"}>
+        <div className={"markBtnWrapper disLikeWrapper"}>
 
-            <Tooltip trigger={['click']} title={"👎👎👎"} placement="topLeft" overlayClassName="numeric-input">
-
-                <DislikeOutlined twoToneColor="#eb2f96" />
-            </Tooltip>
-            {dislikes !== 0
+            {isClientRegistered
                 ?
-                <span className={"likeOrDislikeAmount dislike"}>{dislikes}</span>
-                :
-                <div></div>
-            }
+                <div onClick={onDislikeEvent}>
+                    <Tooltip trigger={['click']} title={"👎👎👎"} placement="topLeft" overlayClassName="numeric-input">
 
+                        <DislikeOutlined/>
+                    </Tooltip>
+                    {dislikes !== 0
+                        ?
+                        <span className={"likeOrDislikeAmount dislike"}>{dislikes}</span>
+                        :
+                        <div></div>
+                    }
+                </div>
+                :
+                <div>
+                    <Tooltip trigger={['click']} title={"Можна голосувати після першого замовлення)"} placement="topLeft" overlayClassName="numeric-input">
+                        <DislikeOutlined/>
+                    </Tooltip>
+                    {dislikes !== 0
+                        ?
+                        <span className={"likeOrDislikeAmount dislike"}>{dislikes}</span>
+                        :
+                        <div></div>
+                    }
+                </div>
+            }
         </div>
     );
 };

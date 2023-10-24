@@ -23,19 +23,19 @@ const Confirm = () => {
 
     const sendData = useCallback(() => {
         const order = new Order(
-            new Client(tg.initDataUnsafe.user.id, client.chatId, clientName, phoneNumber),
+            new Client(tg.initDataUnsafe.user.id, client.telegramId, clientName, phoneNumber),
             orderedGoods,
             message,
             methodOfDelivery
         )
 
-        if (!client.chatId) {
-            throw new Error("chat id is: " + client.chatId)
+        if (!client.telegramId) {
+            throw new Error("chat id is: " + client.telegramId)
         }
 
         saveOrder(order);
         tg.close();
-    },[chatId, clientName, phoneNumber, orderedGoods, message, methodOfDelivery])
+    },[clientName, phoneNumber, orderedGoods, message, methodOfDelivery])
 
     useEffect(() => {
         tg.onEvent("mainButtonClicked", sendData)
