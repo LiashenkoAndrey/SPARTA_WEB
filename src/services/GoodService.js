@@ -1,6 +1,6 @@
 import axios from "axios";
 
-export const host = "http://backend:8080/api"
+export const host = "https://sparta.miloverada.gov.ua:8443/api"
 // export const host = "http://192.168.220.245:8080/api"
 const PAGE_SIZE = 10;
 
