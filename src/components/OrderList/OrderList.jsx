@@ -31,6 +31,7 @@ const OrderList = () => {
                             client={item.client}
                             goodsWithAmount={item.goodsWithAmount}
                             message={item.message}
+                            address={item.address}
                             methodOfDelivery={item.methodOfDelivery}
                         />
                     </Panel>

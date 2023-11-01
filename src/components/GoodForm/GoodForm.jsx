@@ -1,66 +1,132 @@
 import React, {useEffect, useState} from 'react';
 import {UploadOutlined } from '@ant-design/icons';
-import {Button, Form, Input, Upload} from 'antd';
+import {Button, Form, Input, message, Upload} from 'antd';
 import './GoodForm.css'
 import {useTelegram} from "../../hooks/useTelegram";
 import NumericInput from "../NumericInput/NumericInput";
 import { useNavigate } from 'react-router-dom';
+import {getTotalPrice, host} from "../../services/GoodService";
+import axios from "axios";
 
 
-const normFile = (e) => {
-    console.log('Upload event:', e);
-    if (Array.isArray(e)) {
-        return e;
-    }
-    return e?.fileList;
-};
 
 const GoodForm = () => {
-    const [value, setValue] = useState('');
+    const [price, setPrice] = useState('');
     const {mainBtn, tg} = useTelegram();
-    const navigate = useNavigate();
+    const [goodImage, setGoodImage] = useState(null);
+    const [goodName, setGoodName] = useState('')
+    const [messageApi, contextHolder] = message.useMessage();
 
-    const saveGood = () => {
 
-        navigate('/', { replace: true });
+    useEffect(() => {
+        mainBtn.setParams({
+            text: "Додати"
+        })
+    }, []);
+
+     async function sendData () {
+        let data = new FormData();
+        data.append("image", goodImage)
+        data.append("price", price)
+        data.append("name", goodName)
+
+        console.log("save image: " + data)
+
+
+        try {
+            await axios.post(host + "/good/new", data, {
+                crossDomain: true,
+                headers: {
+                    'Content-Type': `multipart/form-data`
+                }
+            }).then((response) => {
+                if (response.status === 200) {
+                    messageApi.open({
+                        type: 'success',
+                        content: 'Збережено успішно!',
+                    });
+                } else {
+                    messageApi.open({
+                        type: 'error',
+                        content: 'Status code: ' + response.status,
+                    });
+                }
+                console.log(response);
+            }, (error) => {
+                messageApi.open({
+                    type: 'error',
+                    content: "Помилка :(",
+                });
+            });
+
+        } catch (error) {
+            console.log(error)
+        }
     }
+
+    useEffect(() => {
+        tg.onEvent("mainButtonClicked", sendData)
+        return () => {
+            tg.offEvent("mainButtonClicked", sendData)
+        }
+    }, [sendData]);
+
+    useEffect(() => {
+        if (goodImage == null || !goodName || !price) {
+            mainBtn.hide()
+        } else {
+            mainBtn.show()
+        }
+    }, [goodImage, goodName, price]);
+    const onUploadImage = (e) => {
+        setGoodImage(e.target.files[0])
+        console.log(e.target.files[0])
+
+    }
+
+    const onChangePrice = (e) => {
+        setPrice(e)
+    }
+
+    const onChangeGoodName = (e) => {
+        setGoodName(e.target.value)
+    }
+
 
     useEffect(() => {
         mainBtn.setParams({
             text: "Зберегти"
         })
         mainBtn.isActive = true
-        mainBtn.show()
     }, [mainBtn]);
 
-    useEffect(() => {
-        tg.onEvent("mainButtonClicked", saveGood)
-    }, [saveGood]);
+
 
 
     return (
         <div className={"goodForm"}>
+            {contextHolder}
             <h4 style={{textAlign: "center"}}>Новий товар</h4>
 
             <div className={"inputs"}>
-                <Input placeholder={"Назва"}/>
+                <Input onChange={onChangeGoodName} placeholder={"Назва"}/>
                 <NumericInput
                     style={{
                         width: 120,
                     }}
-                    value={value}
-                    onChange={setValue}
+                    value={price}
+                    onChange={onChangePrice}
                 />
+
                 <Form.Item
+                    label={<label style={{ color: 'var(--tg-theme-text-color)' }}>Фото товару</label>}
                     name="upload"
-                    label="Фото товару"
                     valuePropName="fileList"
-                    getValueFromEvent={normFile}
+                    onChange={onUploadImage}
                 >
-                    <Upload name="logo" action="/upload.do" listType="picture">
-                        <Button icon={<UploadOutlined />}>Натисни щоб завантажити</Button>
-                    </Upload>
+                    <input style={{color: 'var(--tg-theme-text-color)'}} type="file" onChange={onUploadImage}/>
                 </Form.Item>
+
             </div>
         </div>
     );

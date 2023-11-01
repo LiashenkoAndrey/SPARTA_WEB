@@ -1,6 +1,6 @@
 
 .Header {
-    background: -webkit-linear-gradient(39deg, hsla(189, 100%, 50%, 1) 0%, hsla(248, 16%, 61%, 1) 100%);
+    background-color: #dd243e;;
     padding: 5px;
     gap: 20px;
     display: flex;

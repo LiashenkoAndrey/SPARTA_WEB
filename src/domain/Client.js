@@ -1,17 +1,16 @@
 
-
 export class Client {
 
 
-    constructor(telegramId, chatId, name, phoneNumber) {
+    constructor(telegramId, name, phoneNumber, address) {
         this.telegramId = telegramId;
-        this.chatId = chatId;
         this.name = name;
         this.phoneNumber = phoneNumber;
+        this.address = address;
     }
 
     telegramId
-    chatId
     name
     phoneNumber
+    address
 }

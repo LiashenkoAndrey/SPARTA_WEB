@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React from 'react';
 import {LikeOutlined} from "@ant-design/icons";
 import './LikeAndDislike.css'
 import {Tooltip} from "antd";

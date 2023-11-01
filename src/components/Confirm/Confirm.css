@@ -93,14 +93,18 @@ textarea {
 
 }
 
-.titleWrapper {
-    display: flex;
-    gap: 15px;
-    align-items: center;
+.goodQuantity {
+    position: absolute;
+    right: -10px;
+    top: 0;
 }
 
 .titleWrapper {
+    position: relative;
     display: flex;
+    gap: 15px;
+    align-items: center;
+
 }
 
 .totalPrice {

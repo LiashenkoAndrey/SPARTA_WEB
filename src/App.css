@@ -1,5 +1,5 @@
 
-@import url('https://fonts.googleapis.com/css2?family=Young+Serif&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Libre+Baskerville&display=swap');
 
 
 * {
@@ -13,7 +13,7 @@
 }
 
 html, body {
-  font-family: 'Young Serif', serif;
+  font-family: 'Libre Baskerville', serif;
   height: 100vw;
 }
 

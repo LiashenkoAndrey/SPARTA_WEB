@@ -2,7 +2,10 @@
 
 
 .goodForm {
-    margin: 10px;
+    background-color: var(--tg-theme-secondary-bg-color);
+    padding: 10px;
+    border-radius: 5px;
+    margin: 8px;
 }
 
 .inputs {

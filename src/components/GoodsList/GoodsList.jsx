@@ -2,29 +2,19 @@ import React, {useContext, useEffect, useState} from 'react';
 import Good from "../Good/Good";
 import './GoodsList.css'
 import {useTelegram} from "../../hooks/useTelegram";
-import {getTotalPrice, host, isMarked, isOrdered, markGood} from "../../services/GoodService";
+import {
+    getGoodsMarks,
+    getTotalPrice,
+    host, imageEndpoint,
+    isOrdered,
+    markGood
+} from "../../services/GoodService";
 import {OrderContext} from "../../context";
-import {Link, useNavigate} from "react-router-dom";
+import {useNavigate} from "react-router-dom";
 import {Modal} from "antd";
-import Dislike from "../LikeAndDislike/Dislike";
-import Like from "../LikeAndDislike/Like";
 import axios from "axios";
 import {TelegramContext} from "../../context2";
-import {DislikeOutlined, LikeOutlined} from "@ant-design/icons";
-
-
-async function getGoodsMarks(clientId) {
-    try {
-        if (clientId) {
-            const response = await axios.get(host + "/good/getMarks?clientId=" + clientId);
-            return response.data;
-        }
-        return [];
-    } catch (e) {
-        console.log(e)
-    }
-}
-
+import GoodMarks from "../GoodMarks/GoodMarks";
 
 
 const goodsList = await axios.get(host + `/good/all`)
@@ -40,18 +30,19 @@ const GoodsList = () => {
     const [likes, setLikes] = useState(-1);
     const [dislikes, setDislikes] = useState(-1);
     const [goodsMarks, setGoodsMarks] = useState([])
-
-
     const [goods, setGoods] = useState(goodsList.data)
+
 
     useEffect(() => {
         fetchGoodsMarks()
-    }, []);
 
-    async function fetchGoodsMarks() {
-        const response = await getGoodsMarks(33)
-        console.log(response)
-        setGoodsMarks(response)
+    }, [client]);
+
+     async function fetchGoodsMarks() {
+         if (client.isRegistered) {
+             const response = await getGoodsMarks(client.client.id)
+             setGoodsMarks(response)
+         }
     }
 
     const showModal = (selectedGood) => {
@@ -107,7 +98,6 @@ const GoodsList = () => {
 
     const onLike = () => {
         let newLikes = good.likes + 1;
-        console.log(client)
         good.likes = newLikes
         setGood(good)
         setLikes(newLikes)
@@ -117,7 +107,6 @@ const GoodsList = () => {
     const onDislike = () => {
         let newDislikes = good.dislikes + 1;
         good.dislikes = newDislikes
-        console.log(client)
         setGood(good)
         setDislikes(newDislikes)
         markGood(client.client.id, good.id, false)
@@ -130,6 +119,8 @@ const GoodsList = () => {
 
         mainBtn.show();
     }
+
+
 
     useEffect(() => {
         mainBtn.onClick(() => navigate("/confirm"))
@@ -147,11 +138,8 @@ const GoodsList = () => {
         checkMainButton()
     }
 
-    console.log(goods)
-
     return (
         <div className={"GoodsListWrapper"}>
-            <Link to={"/confirm"}>Confirm</Link>
             <div className={"GoodsList"}>
                 {goods.map(item => (
                     <Good
@@ -174,40 +162,17 @@ const GoodsList = () => {
                 onOk={handleOk}
                 onCancel={handleCancel}
             >
-                <img className={"modalImage"} src={good.image_url} alt="Фото товару"/>
+                <img className={"modalImage"} src={imageEndpoint + good.imageId} alt="Фото товару"/>
 
-                <div className={"likes"}>
-
-                    {isMarked(goodsMarks, good.id, false)
-                        ?
-                        <div className={"markBtnWrapper markedDislikeWrapper"}>
-                            <DislikeOutlined />
-                            <span className={"likeOrDislikeAmount dislike"}>{dislikes}</span>
-                        </div>
-                        :
-                        <Dislike
-                            good={good}
-                            onDislike={onDislike}
-                            dislikes={dislikes}
-                            isClientRegistered={client.isRegistered}
-                        />
-                    }
-
-                    {isMarked(goodsMarks, good.id, true)
-                        ?
-                        <div className={"markBtnWrapper markedLikeWrapper"}>
-                            <LikeOutlined />
-                            <span className={"likeOrDislikeAmount like"}>{likes}</span>
-                        </div>
-                        :
-                        <Like
-                            good={good}
-                            onLike={onLike}
-                            likes={likes}
-                            isClientRegistered={client.isRegistered}
-                        />
-                    }
-                </div>
+                <GoodMarks
+                    goodsMarks={goodsMarks}
+                    good={good}
+                    likes={likes}
+                    dislikes={dislikes}
+                    client={client}
+                    onLike={onLike}
+                    onDislike={onDislike}
+                />
             </Modal>
         </div>
     );

@@ -1,42 +1,37 @@
 import './App.css';
-import React, {useContext, useEffect, useState} from "react";
+import React, {useEffect, useState} from "react";
 import Header from "./components/Header/Header";
 import GoodsList from "./components/GoodsList/GoodsList";
 import {useTelegram} from "./hooks/useTelegram";
-import {BrowserRouter, Link, Route, Routes, useSearchParams} from "react-router-dom";
+import {BrowserRouter, Route, Routes} from "react-router-dom";
 import Confirm from "./components/Confirm/Confirm";
 import {OrderContext} from "./context";
-import axios from "axios";
 import OrderList from "./components/OrderList/OrderList";
-import {host} from "./services/GoodService";
 import {TelegramContext} from "./context2";
 import GoodForm from "./components/GoodForm/GoodForm";
-
-
-const queryParams = new URLSearchParams(window.location.search)
-let telegramId = JSON.parse(queryParams.get("telegramId"));
-
-let existingClient
-
-if (telegramId) {
-    try {
-        existingClient = (await axios.get(host + "/client?telegramId=" + telegramId)).data
-    } catch (e) {
-        existingClient = null
-    }
-}
+import {getClient} from "./services/ClientService";
 
 
  function App() {
 
-     const [client, setClient] = useState({
-         isRegistered: existingClient != null,
-         client: existingClient,
-         telegramId: telegramId
-     })
-
+     const [client, setClient] =  useState(getClient)
      const [orderedGoods, setOrderedGoods] = useState([]);
      const {tg} = useTelegram();
+
+     useEffect(() => {
+        fetchClient()
+     }, []);
+
+
+     async function fetchClient() {
+         let cl = await getClient();
+        console.log(cl)
+         setClient(cl)
+     }
+
+
+     console.log(client)
+
 
      useEffect(() => {
          tg.ready()
@@ -53,7 +48,7 @@ if (telegramId) {
 
                 <BrowserRouter>
                     <Routes>
-                        <Route path={"/"} index element={<GoodsList setClientCallBack={setClient} />}/>
+                        <Route path={"/"} index element={<GoodsList />}/>
                         <Route path={"/orders"} element={<OrderList />} />
                         <Route path={"confirm"} element={<Confirm />}/>
                         <Route path={"newGood"} element={<GoodForm />}/>

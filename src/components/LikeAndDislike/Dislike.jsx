@@ -1,10 +1,10 @@
-import React, {useState} from 'react';
+import React from 'react';
 import {DislikeOutlined} from "@ant-design/icons";
 import './LikeAndDislike.css'
 import {Tooltip} from "antd";
 
 
-const Dislike = ({dislikes, onDislike, isClientRegistered, good}) => {
+const Dislike = ({dislikes, onDislike, isClientRegistered, good, isMarked}) => {
 
 
     const onDislikeEvent = (e) => {
@@ -16,12 +16,10 @@ const Dislike = ({dislikes, onDislike, isClientRegistered, good}) => {
 
     return (
         <div className={"markBtnWrapper disLikeWrapper"}>
-
             {isClientRegistered
                 ?
                 <div onClick={onDislikeEvent}>
                     <Tooltip trigger={['click']} title={"👎👎👎"} placement="topLeft" overlayClassName="numeric-input">
-
                         <DislikeOutlined/>
                     </Tooltip>
                     {dislikes !== 0

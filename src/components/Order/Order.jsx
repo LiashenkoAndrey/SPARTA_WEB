@@ -1,9 +1,9 @@
 import React from 'react';
 import './Order.css'
 import {Descriptions} from "antd";
-import {getTotalPrice} from "../../services/GoodService";
+import {getTotalPrice, imageEndpoint} from "../../services/GoodService";
 
-const Order = ({client, goodsWithAmount, message, methodOfDelivery, createdOn}) => {
+const Order = ({client, goodsWithAmount, message, methodOfDelivery, address}) => {
     console.log(client)
 
     return (
@@ -11,7 +11,7 @@ const Order = ({client, goodsWithAmount, message, methodOfDelivery, createdOn}) 
             {goodsWithAmount.map(goodWithAmount => (
                 <div className={"goodWithAmount"} key={goodWithAmount.good.id}>
                     <div>
-                        <img src={goodWithAmount.good.image_url} alt=""/>
+                        <img src={imageEndpoint + goodWithAmount.good.imageId} alt=""/>
                         <span>{goodWithAmount.good.name}</span>
                     </div>
                     <div>
@@ -26,6 +26,12 @@ const Order = ({client, goodsWithAmount, message, methodOfDelivery, createdOn}) 
                 <Descriptions.Item label="Ім'я">{client.name}</Descriptions.Item>
                 <Descriptions.Item label="Телефон">{client.phoneNumber}</Descriptions.Item>
                 <Descriptions.Item label="Метод доставки">{methodOfDelivery}</Descriptions.Item>
+                {methodOfDelivery === "Кур'єр"
+                    ?
+                    <Descriptions.Item label="Адреса">{address}</Descriptions.Item>
+                    :
+                    <div></div>
+                }
                 <Descriptions.Item label="Загальна сума">{getTotalPrice(goodsWithAmount)}</Descriptions.Item>
 
                 {message

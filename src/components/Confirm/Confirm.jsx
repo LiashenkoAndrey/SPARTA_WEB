@@ -1,13 +1,15 @@
 import React, {useCallback, useContext, useEffect, useState} from 'react';
 import {OrderContext} from "../../context";
 import './Confirm.css';
-import {Link} from "react-router-dom";
-import {getTotalPrice, saveOrder} from "../../services/GoodService";
+import {Link, useNavigate} from "react-router-dom";
+import {getTotalPrice, imageEndpoint, saveOrder} from "../../services/GoodService";
 import {useTelegram} from "../../hooks/useTelegram";
 import {Order} from '../../domain/Order';
 import {Client} from '../../domain/Client';
 import {TelegramContext} from "../../context2";
-
+import {LeftOutlined} from "@ant-design/icons";
+import useSound from "use-sound";
+import onNextSound from '../../assets/audio/next.mp3'
 
 const Confirm = () => {
 
@@ -20,19 +22,52 @@ const Confirm = () => {
     const [message, setMessage] = useState('')
     const [addressInputDisplay, setAddressInputDisplay] = useState('none')
     const [addressInput, setAddressInput] = useState('')
+    const [playOnNextStep] = useSound(onNextSound)
+    const navigate = useNavigate();
+
+    useEffect(() => {
+        if (client.isRegistered) {
+            setClientName(client.client.name)
+            setPhoneNumber(client.client.phoneNumber)
+            setAddressInput(client.client.address)
+        }
+    }, []);
+
+
+    const onBack = () => {
+        playOnNextStep()
+        navigate("/")
+    }
+
+    useEffect(() => {
+        playOnNextStep()
+    }, [playOnNextStep]);
+
+
+    function resolveClient() {
+        if (client.isRegistered) {
+            let saved = client.client;
+            saved.name = clientName
+            saved.phoneNumber = phoneNumber
+            saved.address = addressInput
+            return saved;
+        } else {
+            return new Client(client.telegramId, clientName, phoneNumber, addressInput)
+        }
+    }
 
     const sendData = useCallback(() => {
         const order = new Order(
-            new Client(tg.initDataUnsafe.user.id, client.telegramId, clientName, phoneNumber),
+            resolveClient(),
             orderedGoods,
             message,
-            methodOfDelivery
+            methodOfDelivery,
+            addressInput
         )
 
         if (!client.telegramId) {
             throw new Error("chat id is: " + client.telegramId)
         }
-
         saveOrder(order);
         tg.close();
     },[clientName, phoneNumber, orderedGoods, message, methodOfDelivery])
@@ -88,20 +123,22 @@ const Confirm = () => {
     return (
         <div>
             <div className={"orderHeader"}>
+                <div style={{color: "green", display:"flex"}} onClick={onBack}>
+                    <LeftOutlined />
+                    <h4 style={{marginLeft: 5}}>Назад</h4>
+                </div>
                 <h2>Ваше замовлення</h2>
-                <button onClick={sendData}>Send data</button>
-                <Link style={{color: "green"}} to={"/"}>Змінити</Link>
             </div>
 
             <div className={"orderedItems"}>
                 {orderedGoods.map(item => (
                     <div className={"orderedItem"}>
                         <div className={"titleWrapper"} >
-                            <img style={{height: 80}} src={item.good.image_url} alt=""/>
+                            <img style={{height: 80}} src={imageEndpoint +  item.good.imageId} alt=""/>
                             <h4>{item.good.name}</h4>
-                            <p>
+                            <p className={"goodQuantity"}>
                                 <span style={{color: '#ecbd03'}}>
-                                    <span style={{textTransform: "uppercase", fontSize: 23}}>{item.amount}</span>
+                                    <span style={{textTransform: "uppercase", fontSize: 19}}>{item.amount}</span>
                                     x
                                 </span>
                             </p>
@@ -153,6 +190,7 @@ const Confirm = () => {
                     <div style={{display: addressInputDisplay}}>
                         <label htmlFor="addressInput">Адреса</label>
                         <input
+                            value={addressInput}
                             id={"addressInput"}
                             type="text"
                             className={"input"}
