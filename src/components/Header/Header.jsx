@@ -12,6 +12,8 @@ const Header = () => {
             <div className={"logoWrapper"}>
                 <img src={logo} width={120} alt=""/>
             </div>
+            <a href="/orders">/orders</a>
+            <a href="/newGood">/newGood</a>
             <img src={close} style={{width: 50, padding: 13}} onClick={onClose} alt=""/>
         </div>
     );
