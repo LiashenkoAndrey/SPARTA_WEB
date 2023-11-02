@@ -4,7 +4,19 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="82b2002a-7143-4046-af63-85217d94ce63" name="Changes" comment="add new build2" />
+    <list default="true" id="82b2002a-7143-4046-af63-85217d94ce63" name="Changes" comment="add new build2">
+      <change afterPath="$PROJECT_DIR$/src/constants.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/Confirm/Confirm.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/Confirm/Confirm.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/Good/Good.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/Good/Good.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/GoodsList/GoodsList.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/GoodsList/GoodsList.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/GoodsList/GoodsList.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/GoodsList/GoodsList.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/Header/Header.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/Header/Header.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/OrderList/OrderList.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/OrderList/OrderList.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/OrderList/OrderList.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/OrderList/OrderList.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/services/ClientService.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/services/ClientService.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/services/GoodService.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/services/GoodService.js" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -13,8 +25,8 @@
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
       <list>
-        <option value="JavaScript File" />
         <option value="CSS File" />
+        <option value="JavaScript File" />
       </list>
     </option>
   </component>
@@ -65,6 +77,9 @@
       <workItem from="1698781871157" duration="428000" />
       <workItem from="1698827380883" duration="458000" />
       <workItem from="1698828534199" duration="2223000" />
+      <workItem from="1698833966786" duration="4585000" />
+      <workItem from="1698914456910" duration="2329000" />
+      <workItem from="1698916810786" duration="2796000" />
     </task>
     <task id="LOCAL-00001" summary="little changes">
       <option name="closed" value="true" />

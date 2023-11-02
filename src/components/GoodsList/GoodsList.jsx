@@ -11,10 +11,12 @@ import {
 } from "../../services/GoodService";
 import {OrderContext} from "../../context";
 import {useNavigate} from "react-router-dom";
-import {Modal} from "antd";
+import {message, Modal} from "antd";
 import axios from "axios";
 import {TelegramContext} from "../../context2";
 import GoodMarks from "../GoodMarks/GoodMarks";
+import {DeleteOutlined, DeleteTwoTone} from "@ant-design/icons";
+import {isAuth} from "../../services/ClientService";
 
 
 const goodsList = await axios.get(host + `/good/all`)
@@ -24,14 +26,14 @@ const GoodsList = () => {
     const {client, setClient} = useContext(TelegramContext);
     const navigate = useNavigate();
     const {orderedGoods, setOrderedGoods} = useContext(OrderContext)
-    const {mainBtn} = useTelegram();
+    const {mainBtn, tg} = useTelegram();
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [good, setGood] = useState('')
     const [likes, setLikes] = useState(-1);
     const [dislikes, setDislikes] = useState(-1);
     const [goodsMarks, setGoodsMarks] = useState([])
     const [goods, setGoods] = useState(goodsList.data)
-
+    const [messageApi, contextHolder] = message.useMessage();
 
     useEffect(() => {
         fetchGoodsMarks()
@@ -120,6 +122,28 @@ const GoodsList = () => {
         mainBtn.show();
     }
 
+    async function onDeleteGood () {
+        let deleteGoodId = good.id
+        await axios.delete(host + `/good/${deleteGoodId}/delete`).then(() => {
+            console.log(goods)
+            let res = goods.filter((e) => {
+                return  e.id !== deleteGoodId
+            })
+            setGoods(res)
+            handleCancel()
+
+            messageApi.open({
+                type: 'success',
+                content: 'Видалено успішно!',
+            });
+        }, (error) => {
+            messageApi.open({
+                type: 'error',
+                content: "Помилка :(",
+            });
+        })
+    }
+
 
 
     useEffect(() => {
@@ -140,6 +164,8 @@ const GoodsList = () => {
 
     return (
         <div className={"GoodsListWrapper"}>
+            {contextHolder}
+
             <div className={"GoodsList"}>
                 {goods.map(item => (
                     <Good
@@ -173,6 +199,15 @@ const GoodsList = () => {
                     onLike={onLike}
                     onDislike={onDislike}
                 />
+
+                {isAuth
+                    ?
+                    <div className={"deleteGoodBtn"} onClick={onDeleteGood}>
+                        <DeleteTwoTone style={{fontSize: "40px"}}  twoToneColor="red" />
+                    </div>
+                    :
+                    <div></div>
+                }
             </Modal>
         </div>
     );

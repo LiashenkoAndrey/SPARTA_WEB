@@ -10,6 +10,7 @@ import {TelegramContext} from "../../context2";
 import {LeftOutlined} from "@ant-design/icons";
 import useSound from "use-sound";
 import onNextSound from '../../assets/audio/next.mp3'
+import {soundsVolume} from "../../constants";
 
 const Confirm = () => {
 
@@ -22,7 +23,7 @@ const Confirm = () => {
     const [message, setMessage] = useState('')
     const [addressInputDisplay, setAddressInputDisplay] = useState('none')
     const [addressInput, setAddressInput] = useState('')
-    const [playOnNextStep] = useSound(onNextSound)
+    const [playOnNextStep] = useSound(onNextSound, {volume: soundsVolume})
     const navigate = useNavigate();
 
     useEffect(() => {

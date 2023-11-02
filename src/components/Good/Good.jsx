@@ -6,10 +6,11 @@ import plusBtn from '../../assets/img/plus-circle-svgrepo-com.svg'
 import GoodButton from "../Button/Button";
 import onEventSound from '../../assets/audio/OnEvent.mp3'
 import useSound from "use-sound";
+import {soundsVolume} from "../../constants";
 
 const Good = ({good, addGood, removeGood, orderedGoods, showModal}) => {
 
-    const [playOnEvent] = useSound(onEventSound)
+    const [playOnEvent] = useSound(onEventSound, {volume: soundsVolume})
 
 
     const onShowModal = () => {

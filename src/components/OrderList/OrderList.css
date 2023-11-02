@@ -1,7 +1,12 @@
 
-
+.orderFilterSelect {
+    padding: 10px;
+    display: flex;
+    justify-content: flex-end;
+}
 
 .ordersListWrapper {
+    padding: 8px;
     margin-top: 20px;
 }
 
