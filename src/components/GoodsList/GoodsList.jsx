@@ -169,7 +169,6 @@ const GoodsList = () => {
             {goods.length !== 0
                 ?
                 <div>
-                    <Link to={"/confirm"}>Ok</Link>
                     <div className={"GoodsList"}>
                         {goods.map(item => (
                             <Good

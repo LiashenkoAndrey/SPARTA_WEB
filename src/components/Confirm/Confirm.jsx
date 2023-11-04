@@ -134,7 +134,6 @@ const Confirm = () => {
                     <LeftOutlined />
                     <h4 style={{marginLeft: 5}}>Назад</h4>
                 </div>
-                <button onClick={sendData}>send</button>
                 <h2>Ваше замовлення</h2>
             </div>
 
