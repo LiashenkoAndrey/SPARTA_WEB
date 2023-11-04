@@ -1,7 +1,7 @@
 {
   "files": {
     "main.css": "/static/css/main.8bc8bb27.css",
-    "main.js": "/static/js/main.b69a95e8.js",
+    "main.js": "/static/js/main.d63e4cef.js",
     "static/js/845.13101378.chunk.js": "/static/js/845.13101378.chunk.js",
     "static/media/two-crossed-swords.png": "/static/media/two-crossed-swords.18a83130418b6bbd57ed.png",
     "static/media/logo.png": "/static/media/logo.5206008af0a56c1cec4c.png",
@@ -11,11 +11,11 @@
     "index.html": "/index.html",
     "static/media/minus-svgrepo-com.svg": "/static/media/minus-svgrepo-com.b9a50783142fe392d89745b12241bd56.svg",
     "main.8bc8bb27.css.map": "/static/css/main.8bc8bb27.css.map",
-    "main.b69a95e8.js.map": "/static/js/main.b69a95e8.js.map",
+    "main.d63e4cef.js.map": "/static/js/main.d63e4cef.js.map",
     "845.13101378.chunk.js.map": "/static/js/845.13101378.chunk.js.map"
   },
   "entrypoints": [
     "static/css/main.8bc8bb27.css",
-    "static/js/main.b69a95e8.js"
+    "static/js/main.d63e4cef.js"
   ]
 }

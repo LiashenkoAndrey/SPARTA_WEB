@@ -1,8 +1,8 @@
 import React, {useCallback, useContext, useEffect, useState} from 'react';
 import {OrderContext} from "../../context";
 import './Confirm.css';
-import {Link, useNavigate} from "react-router-dom";
-import {getTotalPrice, imageEndpoint, saveOrder} from "../../services/GoodService";
+import {useNavigate} from "react-router-dom";
+import {getTotalPrice, host, imageEndpoint, saveOrder} from "../../services/GoodService";
 import {useTelegram} from "../../hooks/useTelegram";
 import {Order} from '../../domain/Order';
 import {Client} from '../../domain/Client';
@@ -11,6 +11,8 @@ import {LeftOutlined} from "@ant-design/icons";
 import useSound from "use-sound";
 import onNextSound from '../../assets/audio/next.mp3'
 import {soundsVolume} from "../../constants";
+import {message} from "antd";
+import axios from "axios";
 
 const Confirm = () => {
 
@@ -20,11 +22,12 @@ const Confirm = () => {
     const [phoneNumber, setPhoneNumber] = useState('')
     const [clientName, setClientName] = useState('')
     const [methodOfDelivery, setMethodOfDelivery] = useState('Самовивіз')
-    const [message, setMessage] = useState('')
+    const [clientMessage, setClientMessage] = useState('')
     const [addressInputDisplay, setAddressInputDisplay] = useState('none')
     const [addressInput, setAddressInput] = useState('')
     const [playOnNextStep] = useSound(onNextSound, {volume: soundsVolume})
     const navigate = useNavigate();
+    const [messageApi, contextHolder] = message.useMessage();
 
     useEffect(() => {
         if (client.isRegistered) {
@@ -57,21 +60,25 @@ const Confirm = () => {
         }
     }
 
-    const sendData = useCallback(() => {
+    const sendData = useCallback(  async () => {
         const order = new Order(
             resolveClient(),
             orderedGoods,
-            message,
+            clientMessage,
             methodOfDelivery,
             addressInput
         )
-
         if (!client.telegramId) {
             throw new Error("chat id is: " + client.telegramId)
         }
-        saveOrder(order);
-        tg.close();
-    },[clientName, phoneNumber, orderedGoods, message, methodOfDelivery, addressInput])
+        await axios.post(host + "/order/new" , order).then((res) => {
+            console.log(res)
+            tg.close()
+        }, (error) => {
+            console.error(error)
+        })
+
+    },[clientName, phoneNumber, orderedGoods, clientMessage, methodOfDelivery, addressInput])
 
     useEffect(() => {
         tg.onEvent("mainButtonClicked", sendData)
@@ -103,7 +110,7 @@ const Confirm = () => {
     }
 
     const onChangeMessage = (e) => {
-        setMessage(e.target.value)
+        setClientMessage(e.target.value)
     }
 
     const onChangeClientName = (e) => {
@@ -127,6 +134,7 @@ const Confirm = () => {
                     <LeftOutlined />
                     <h4 style={{marginLeft: 5}}>Назад</h4>
                 </div>
+                <button onClick={sendData}>send</button>
                 <h2>Ваше замовлення</h2>
             </div>
 
@@ -203,7 +211,7 @@ const Confirm = () => {
 
             <div className={"commentWrapper"}>
                 <textarea
-                    value={message}
+                    value={clientMessage}
                     rows="7"
                     placeholder={"Додати коментар..."}
                     onChange={onChangeMessage}

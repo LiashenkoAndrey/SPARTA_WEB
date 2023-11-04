@@ -10,7 +10,7 @@ import {
     markGood
 } from "../../services/GoodService";
 import {OrderContext} from "../../context";
-import {useNavigate} from "react-router-dom";
+import {Link, useNavigate} from "react-router-dom";
 import {Empty, message, Modal} from "antd";
 import axios from "axios";
 import {TelegramContext} from "../../context2";
@@ -169,6 +169,7 @@ const GoodsList = () => {
             {goods.length !== 0
                 ?
                 <div>
+                    <Link to={"/confirm"}>Ok</Link>
                     <div className={"GoodsList"}>
                         {goods.map(item => (
                             <Good

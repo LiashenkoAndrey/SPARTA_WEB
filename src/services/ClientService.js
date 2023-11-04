@@ -5,8 +5,8 @@ import {useTelegram} from "../hooks/useTelegram";
 const {tg} = useTelegram();
 
 export async function getClient() {
-
-    let telegramId = 1053183238;
+    let telegramId = tg.initDataUnsafe.user.id;
+    // let telegramId = 1053183238;
     let isClientExist = (await axios.get(host + "/client/isExists?telegramId=" + telegramId)).data
 
     let existingClient
@@ -32,5 +32,6 @@ const authUsers = [
 ]
 
 export function isAuth() {
-   return authUsers.includes(Number(tg.initDataUnsafe.user.id));
+    // return true;
+    return authUsers.includes(Number(tg.initDataUnsafe.user.id));
 }

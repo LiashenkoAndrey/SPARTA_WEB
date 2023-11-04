@@ -1,9 +1,12 @@
 import axios from "axios";
+import {useTelegram} from "../hooks/useTelegram";
 
 // export const host = "http://localhost:8080/api"
 export const host = "https://sparta.miloverada.gov.ua:8443/api"
 // export const host = "http://192.168.220.245:8080/api"
 const PAGE_SIZE = 10;
+
+const {tg} = useTelegram();
 
 export const imageEndpoint = host + "/upload/image/"
 export function isOrdered(id, orders) {
@@ -19,8 +22,23 @@ export function getTotalPrice(orders) {
     }, 0)
 }
 
-export async function saveOrder(order) {
-    await axios.post(host + "/order/new" , order);
+export async function saveOrder(order, messageApi) {
+    await axios.post(host + "/order/new" , order).then((res) => {
+        console.log(res)
+
+        messageApi.open({
+            type: 'success',
+            content: 'Оброблено успішно!',
+        });
+
+    }, (error) => {
+        console.error(error)
+        messageApi.open({
+            type: 'error',
+            content: "Помилка при прийнятті замовлення :(",
+        });
+    })
+    // tg.close();
 }
 
 
