@@ -4,8 +4,22 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="82b2002a-7143-4046-af63-85217d94ce63" name="Changes" comment="deploy config">
+    <list default="true" id="82b2002a-7143-4046-af63-85217d94ce63" name="Changes" comment="new build">
+      <change afterPath="$PROJECT_DIR$/src/assets/img/delete.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/assets/img/two-crossed-swords.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/services/OrderService.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/package-lock.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/package.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/Confirm/Confirm.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/Confirm/Confirm.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/GoodsList/GoodsList.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/GoodsList/GoodsList.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/Header/Header.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/Header/Header.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/Header/Header.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/Header/Header.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/Order/Order.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/Order/Order.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/OrderList/OrderList.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/OrderList/OrderList.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/OrderList/OrderList.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/OrderList/OrderList.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/services/ClientService.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/services/ClientService.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/services/GoodService.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/services/GoodService.js" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -17,6 +31,7 @@
       <list>
         <option value="CSS File" />
         <option value="JavaScript File" />
+        <option value="TypeScript File" />
       </list>
     </option>
   </component>
@@ -53,6 +68,12 @@
     &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   }
 }</component>
+  <component name="RecentsManager">
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="C:\Users\TheStudyAccount\IdeaProjects\Sparta-app\sparta-web-app\src\assets\img" />
+      <recent name="C:\Users\TheStudyAccount\IdeaProjects\Sparta-app\sparta-web-app\src\assets" />
+    </key>
+  </component>
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="TaskManager">
     <task active="true" id="Default" summary="Default task">
@@ -69,7 +90,8 @@
       <workItem from="1698828534199" duration="2223000" />
       <workItem from="1698833966786" duration="4585000" />
       <workItem from="1698914456910" duration="2329000" />
-      <workItem from="1698916810786" duration="3484000" />
+      <workItem from="1698916810786" duration="15952000" />
+      <workItem from="1699082735101" duration="2871000" />
     </task>
     <task id="LOCAL-00001" summary="little changes">
       <option name="closed" value="true" />
@@ -123,6 +145,7 @@
     <MESSAGE value="add new build2" />
     <MESSAGE value="add good deletion and volume settings" />
     <MESSAGE value="deploy config" />
-    <option name="LAST_COMMIT_MESSAGE" value="deploy config" />
+    <MESSAGE value="new build" />
+    <option name="LAST_COMMIT_MESSAGE" value="new build" />
   </component>
 </project>

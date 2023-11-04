@@ -71,7 +71,7 @@ const Confirm = () => {
         }
         saveOrder(order);
         tg.close();
-    },[clientName, phoneNumber, orderedGoods, message, methodOfDelivery])
+    },[clientName, phoneNumber, orderedGoods, message, methodOfDelivery, addressInput])
 
     useEffect(() => {
         tg.onEvent("mainButtonClicked", sendData)
@@ -117,7 +117,6 @@ const Confirm = () => {
         } else {
             setAddressInputDisplay('none')
         }
-        encodeURIComponent()
     }
 
 

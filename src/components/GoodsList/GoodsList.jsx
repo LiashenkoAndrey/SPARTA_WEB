@@ -11,7 +11,7 @@ import {
 } from "../../services/GoodService";
 import {OrderContext} from "../../context";
 import {useNavigate} from "react-router-dom";
-import {message, Modal} from "antd";
+import {Empty, message, Modal} from "antd";
 import axios from "axios";
 import {TelegramContext} from "../../context2";
 import GoodMarks from "../GoodMarks/GoodMarks";
@@ -166,49 +166,57 @@ const GoodsList = () => {
         <div className={"GoodsListWrapper"}>
             {contextHolder}
 
-            <div className={"GoodsList"}>
-                {goods.map(item => (
-                    <Good
-                        showModal={showModal}
-                        good={item}
-                        key={item.id}
-                        goods={goods}
-                        addGood={addGood}
-                        removeGood={removeGood}
-                        orderedGoods={orderedGoods}
-                    />
-                ))}
-            </div>
-
-            <Modal
-                title={good.name}
-                open={isModalOpen}
-                okText={`Додати ${good.name}`}
-                cancelText={"Закрити"}
-                onOk={handleOk}
-                onCancel={handleCancel}
-            >
-                <img className={"modalImage"} src={imageEndpoint + good.imageId} alt="Фото товару"/>
-
-                <GoodMarks
-                    goodsMarks={goodsMarks}
-                    good={good}
-                    likes={likes}
-                    dislikes={dislikes}
-                    client={client}
-                    onLike={onLike}
-                    onDislike={onDislike}
-                />
-
-                {isAuth
-                    ?
-                    <div className={"deleteGoodBtn"} onClick={onDeleteGood}>
-                        <DeleteTwoTone style={{fontSize: "40px"}}  twoToneColor="red" />
+            {goods.length !== 0
+                ?
+                <div>
+                    <div className={"GoodsList"}>
+                        {goods.map(item => (
+                            <Good
+                                showModal={showModal}
+                                good={item}
+                                key={item.id}
+                                goods={goods}
+                                addGood={addGood}
+                                removeGood={removeGood}
+                                orderedGoods={orderedGoods}
+                            />
+                        ))}
                     </div>
-                    :
-                    <div></div>
-                }
-            </Modal>
+
+                    <Modal
+                        title={good.name}
+                        open={isModalOpen}
+                        okText={`Додати ${good.name}`}
+                        cancelText={"Закрити"}
+                        onOk={handleOk}
+                        onCancel={handleCancel}
+                    >
+                        <img className={"modalImage"} src={imageEndpoint + good.imageId} alt="Фото товару"/>
+
+                        <GoodMarks
+                            goodsMarks={goodsMarks}
+                            good={good}
+                            likes={likes}
+                            dislikes={dislikes}
+                            client={client}
+                            onLike={onLike}
+                            onDislike={onDislike}
+                        />
+
+                        {isAuth()
+                            ?
+                            <div className={"deleteGoodBtn"} onClick={onDeleteGood}>
+                                <DeleteTwoTone style={{fontSize: "40px"}}  twoToneColor="red" />
+                            </div>
+                            :
+                            <div></div>
+                        }
+                    </Modal>
+                </div>
+                :
+                <Empty style={{marginTop: 40}} description={<span style={{color: "var(--tg-theme-text-color)"}}>Поки немає товарів</span>}/>
+            }
+
         </div>
     );
 };

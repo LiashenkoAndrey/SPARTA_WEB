@@ -2,9 +2,11 @@ import React from 'react';
 import './Order.css'
 import {Descriptions} from "antd";
 import {getTotalPrice, imageEndpoint} from "../../services/GoodService";
+import Paragraph from "antd/es/typography/Paragraph";
+import { Space, Typography } from 'antd';
+const { Text, Link } = Typography;
 
-const Order = ({client, goodsWithAmount, message, methodOfDelivery, address}) => {
-    console.log(client)
+const Order = ({client, goodsWithAmount, message, methodOfDelivery, address, goodId}) => {
 
     return (
         <div className={"order"}>
@@ -24,7 +26,11 @@ const Order = ({client, goodsWithAmount, message, methodOfDelivery, address}) =>
 
             <Descriptions title="Деталі запису">
                 <Descriptions.Item label="Ім'я">{client.name}</Descriptions.Item>
-                <Descriptions.Item label="Телефон">{client.phoneNumber}</Descriptions.Item>
+                <Descriptions.Item label="Телефон">
+                    <Text style={{color: "var(--tg-theme-text-color)"}} copyable={{
+                        tooltips: ['Копіювати номер', 'Скопійовано!']
+                    }}>{client.phoneNumber}</Text>
+                </Descriptions.Item>
                 <Descriptions.Item label="Метод доставки">{methodOfDelivery}</Descriptions.Item>
                 {methodOfDelivery === "Кур'єр"
                     ?
@@ -37,10 +43,10 @@ const Order = ({client, goodsWithAmount, message, methodOfDelivery, address}) =>
                 {message
                 ?
                     <Descriptions.Item label="Коментар">{message}</Descriptions.Item>
-
                 :
                     <div></div>
                 }
+                <Descriptions.Item label="ID">{goodId}</Descriptions.Item>
             </Descriptions>
         </div>
     );

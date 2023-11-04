@@ -1,21 +1,21 @@
 {
   "files": {
-    "main.css": "/static/css/main.5b46c755.css",
-    "main.js": "/static/js/main.c8fa81ed.js",
+    "main.css": "/static/css/main.8bc8bb27.css",
+    "main.js": "/static/js/main.f0722028.js",
     "static/js/845.13101378.chunk.js": "/static/js/845.13101378.chunk.js",
+    "static/media/two-crossed-swords.png": "/static/media/two-crossed-swords.18a83130418b6bbd57ed.png",
     "static/media/logo.png": "/static/media/logo.5206008af0a56c1cec4c.png",
     "static/media/OnEvent.mp3": "/static/media/OnEvent.18eb73ebc11e6fb4e809.mp3",
     "static/media/next.mp3": "/static/media/next.2150d39233e26f1cfc85.mp3",
     "static/media/plus-circle-svgrepo-com.svg": "/static/media/plus-circle-svgrepo-com.c2d362862636ecac85cbb532189de5a9.svg",
-    "static/media/removeBtn.svg": "/static/media/removeBtn.82bdea8707be595b6b96eaa33b33da30.svg",
     "index.html": "/index.html",
     "static/media/minus-svgrepo-com.svg": "/static/media/minus-svgrepo-com.b9a50783142fe392d89745b12241bd56.svg",
-    "main.5b46c755.css.map": "/static/css/main.5b46c755.css.map",
-    "main.c8fa81ed.js.map": "/static/js/main.c8fa81ed.js.map",
+    "main.8bc8bb27.css.map": "/static/css/main.8bc8bb27.css.map",
+    "main.f0722028.js.map": "/static/js/main.f0722028.js.map",
     "845.13101378.chunk.js.map": "/static/js/845.13101378.chunk.js.map"
   },
   "entrypoints": [
-    "static/css/main.5b46c755.css",
-    "static/js/main.c8fa81ed.js"
+    "static/css/main.8bc8bb27.css",
+    "static/js/main.f0722028.js"
   ]
 }

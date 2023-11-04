@@ -1,7 +1,8 @@
 
 .Header {
-    background-color: #dd243e;;
-    padding: 5px;
+    /*background-color: #dd243e;*/
+    background-color: #6e1f2b;
+    padding: 5px 15px;
     gap: 20px;
     display: flex;
     justify-content: space-between;
@@ -14,4 +15,10 @@
 
 .Header h1 {
     color: white;
+}
+
+.closeAppBtn {
+    width: 32px;
+    height: 32px;
+    align-self: center;
 }
